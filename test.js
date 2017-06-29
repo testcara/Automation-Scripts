@@ -7,4 +7,4 @@ db.units_srpm.drop()
 db.task_status.drop()
 db.units_node.drop()
 db.units_iso.drop()
-
+db.repo_content_units.drop()
