@@ -69,5 +69,9 @@ echo "=================Update Done================="
 echo "==============Restart the service============"
 echo /etc/init.d/httpd24-httpd restart
 /etc/init.d/httpd24-httpd restart
-echo /etc/init.d/messaging_service restart
-/etc/init.d/messaging_service restart
+echo /etc/init.d/delayed_job restart
+/etc/init.d/delayed_job restart
+echo /etc/init.d/qpid_service restart
+/etc/init.d/qpid_service restart
+echo /etc/init.d/messaging_bus restart
+/etc/init.d/messaging_bus restart
