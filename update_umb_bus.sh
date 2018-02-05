@@ -30,7 +30,7 @@ do
   backup_file ${file}
 done
 echo "=====Update the umb server setting======"
-for umb_outdated_server in 'messaging-devops-broker01.web.stage.ext.phx2.redhat.com:5671' 'messaging-devops-broker01.qe.stage.ext.phx2.redhat.com:5671'
+for umb_outdated_server in 'messaging-devops-broker01.web.stage.ext.phx2.redhat.com:5671' 'messaging-devops-broker01.qe.stage.ext.phx2.redhat.com:5671' 'messaging-devops-broker01.web.qa.ext.phx1.redhat.com:5671'
 do
   echo sed -i "s/${umb_outdated_server}/${umb_server}/g" ${umb_server_setting_file}
   sed -i "s/${umb_outdated_server}/${umb_server}/g"  ${umb_server_setting_file}
@@ -73,5 +73,5 @@ echo /etc/init.d/delayed_job restart
 /etc/init.d/delayed_job restart
 echo /etc/init.d/qpid_service restart
 /etc/init.d/qpid_service restart
-echo /etc/init.d/messaging_bus restart
-/etc/init.d/messaging_bus restart
+echo /etc/init.d/messaging_service restart
+/etc/init.d/messaging_service restart

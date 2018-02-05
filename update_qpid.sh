@@ -49,5 +49,5 @@ echo /etc/init.d/delayed_job restart
 /etc/init.d/delayed_job restart
 echo /etc/init.d/qpid_service restart
 /etc/init.d/qpid_service restart
-echo /etc/init.d/messaging_bus restart
-/etc/init.d/messaging_bus restart
+echo /etc/init.d/messaging_service restart
+/etc/init.d/messaging_service restart
