@@ -1,6 +1,13 @@
 #!/bin/sh
 # log in the ET server, download the automation scripts, run the script to do the update. 
 ssh -tt root@${1} << EOF
+check_return_code () {
+	if [ $? ]; then
+		echo "=====PASS====="
+	else
+		exit 1
+	fi
+}
 if [ -e Automation-Scripts ];then
   rm -rf Automation-Scripts
   echo "=====deleting the obsoleted files====="
@@ -11,11 +18,13 @@ cd Automation-Scripts
 echo "=====git checkout branch====="
 git checkout  shell_scripts
 echo "=====updating umb====="
-./update_umb_bus.sh  /var/www/errata_rails/config/initializers/credentials/message_bus.rb /var/www/errata_rails/lib/message_bus/handler.rb ${2}
-./update_umb_bus.sh  /var/www/errata_rails/examples/ruby/message_bus/umb_configuration.rb /var/www/errata_rails/examples/ruby/message_bus/handler.rb ${2}
+./update_umb_bus.sh /var/www/errata_rails/config/initializers/credentials/message_bus.rb /var/www/errata_rails/lib/message_bus/handler.rb ${2}
+check_return_code
+./update_umb_bus.sh /var/www/errata_rails/examples/ruby/message_bus/umb_configuration.rb /var/www/errata_rails/examples/ruby/message_bus/handler.rb ${2}
+check_return_code
 echo "=====updating qpid====="
 ./update_qpid.sh /var/www/errata_rails/config/initializers/credentials/qpid.rb   /var/www/errata_rails/lib/message_bus/qpid_handler.rb  ${3}
-rm -rf /tmp/${dir}
+check_return_code
 exit
 exit
 EOF

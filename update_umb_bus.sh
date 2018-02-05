@@ -4,7 +4,7 @@
 ## update_umb_bus.sh  /var/www/errata_rails/config/initializers/credentials/message_bus.rb /var/www/errata_rails/lib/message_bus/handler.rb 10.8.241.108:5672
 
 backup_file() {
-  if [ -e "${1}_bak" ];then
+  if [[ -e "${1}_bak" ]];then
     echo "==The backup file has been existed=="
   else
     echo "==Backuping the umb setting file=="
@@ -13,7 +13,7 @@ backup_file() {
   fi
 }
 
-if [ "$#" -eq 3 ];then
+if [[ "$#" -eq 3 ]];then
   umb_server_setting_file=$1
   umb_handler_file=$2
   umb_server=$3
@@ -66,12 +66,23 @@ echo "=====Update the server hostname to ip====="
 echo sed -i "s/ErrataSystem::SERVICE_NAME/\"0.0.0.0\"/g" ${umb_handler_file}
 sed -i "s/ErrataSystem::SERVICE_NAME/\"0.0.0.0\"/g" ${umb_handler_file}
 echo "=================Update Done================="
-echo "==============Restart the service============"
-echo /etc/init.d/httpd24-httpd restart
-/etc/init.d/httpd24-httpd restart
-echo /etc/init.d/delayed_job restart
-/etc/init.d/delayed_job restart
-echo /etc/init.d/qpid_service restart
-/etc/init.d/qpid_service restart
-echo /etc/init.d/messaging_service restart
-/etc/init.d/messaging_service restart
+
+restart_service() {
+  echo "==============Restart the service============"
+  echo /etc/init.d/httpd24-httpd restart
+  /etc/init.d/httpd24-httpd restart
+  echo /etc/init.d/delayed_job restart
+  /etc/init.d/delayed_job restart
+  echo /etc/init.d/qpid_service restart
+  /etc/init.d/qpid_service restart
+  echo /etc/init.d/messaging_service restart
+  /etc/init.d/messaging_service restart
+  echo "=====check the service status====="
+}
+
+if [[ $1 =~ 'example' ]];then
+  echo "=====Just update the example configration, do not need to restart the service====="
+  echo "=====Will not restart the service====="
+else
+  restart_service
+fi

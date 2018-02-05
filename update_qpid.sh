@@ -3,7 +3,7 @@
 ## update_qpid.sh /var/www/errata_rails/config/initializers/credentials/qpid.rb   /var/www/errata_rails/lib/message_bus/qpid_handler.rb  10.8.248.33
 
 backup_file() {
-  if [ -e "${1}_bak" ];then
+  if [[ -e "${1}_bak" ]];then
     echo "==The backup file has been existed=="
   else
     echo "==Backuping the qpid setting file=="
@@ -12,7 +12,7 @@ backup_file() {
   fi
 }
 
-if [ "$#" -eq 3 ];then
+if [[ "$#" -eq 3 ]];then
   qpid_server_setting_file=$1
   qpid_handler_file=$2
   qpid_server=$3
