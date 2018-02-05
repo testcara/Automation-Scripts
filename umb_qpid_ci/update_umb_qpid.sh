@@ -72,6 +72,7 @@ restore_servers() {
 	do
 		restore_file ${server_file}
 	done
+    restart_service
 }
 
 restart_service() {
