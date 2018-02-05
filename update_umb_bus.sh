@@ -4,7 +4,7 @@
 ## update_umb_bus.sh  /var/www/errata_rails/config/initializers/credentials/message_bus.rb /var/www/errata_rails/lib/message_bus/handler.rb 10.8.241.108:5672
 
 backup_file() {
-  if [ -z "${1}_bak" ];then
+  if [ -e "${1}_bak" ];then
     echo "==The backup file has been existed=="
   else
     echo "==Backuping the umb setting file=="
