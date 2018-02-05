@@ -31,7 +31,6 @@ update_service_name() {
 }
 
 check_return_code() {
-	echo $?
 	if [[ $? != 0 ]]; then
 		exit 1
 	else
