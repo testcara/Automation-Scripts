@@ -7,7 +7,7 @@ import sys
 def get_bug_and_format_bug(bug_id):
 	bug_result = ""
 	bzapi = bugzilla.Bugzilla("bugzilla.redhat.com")
-	bug = bzapi.getbug(bug_id)
+	bug = bzapi.getbug(int(bug_id))
 	qe_flag = False
 	for flag in bug.flags:
 		if flag['name'] == "qe_test_coverage":
