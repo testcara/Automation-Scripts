@@ -3,6 +3,28 @@ import pprint
 import bugzilla
 import sys
 
+'''
+    The scripts are used to generate the confluence content for bugs searched from bugzilla.
+    The top funcion is 'generate_confluence_page_for_bugs'.
+    And it would do the followging steps:
+    1. call function to generate the bz account config file.
+    2. call function to get bugs and format bugs
+    3. call function to generate the confluence content page for the bugs
+    4. remove the bz account config file. :)
+    The script can be used as 'sudo python generate_confluence_page_for_bugs.py username password '8380529, 123456'
+'''
+def generate_bugzilla_conf_file(user, password):
+	user_account = "[Credentials]\n" + "user='" + user + "'\n" + "password='" + password +"'"
+	f = open('/etc/bugzillarc', 'w')
+	f.write(user_account)
+	f.close
+
+def empty_bugzilla_conf_file():
+	content = " "
+	f = open('/etc/bugzillarc', 'w')
+	f.write(content)
+	f.close
+
 
 def get_bug_and_format_bug(bug_id):
 	bug_result = ""
@@ -56,19 +78,20 @@ def generate_bug_content(formatted_bug):
 	return bug_row_html
 
 
-def generate_confluence_page_for_bugs(bugs):
+def generate_confluence_page_for_bugs(user, password, bugs):
+	generate_bugzilla_conf_file(user, password)
 	formatted_bugs_list = get_bugs_and_format_bugs(bugs)
 	html = generate_page_content(formatted_bugs_list)
 	write_page_file(html)
+	empty_bugzilla_conf_file()
 
 
 if __name__== "__main__":
-	bugs_list = []
-	if len(sys.argv) == 2:
-		bugs_list = sys.argv[1]
+	if len(sys.argv) < 4:
+		print len(sys.argv)
+		print "===Error===, username, password, bugs parameters are needed!"
 	else:
-		bugs_list = sys.argv[2:]
-	print bugs_list
-	print type(bugs_list)
-
-	generate_confluence_page_for_bugs(bugs_list)
+		username = sys.argv[1]
+		password = sys.argv[2]
+        bugs_list = sys.argv[3:]
+        generate_confluence_page_for_bugs(username, password, bugs_list)
