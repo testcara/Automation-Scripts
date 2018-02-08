@@ -14,7 +14,7 @@ import sys
     The script can be used as 'sudo python generate_confluence_page_for_bugs.py username password '8380529, 123456'
 '''
 def generate_bugzilla_conf_file(user, password):
-	user_account = "[Credentials]\n" + "user='" + user + "'\n" + "password='" + password +"'"
+	user_account = "[bugzilla.redhat.com]\n" + "user=" + user + "\n" + "password=" + password
 	f = open('/etc/bugzillarc', 'w')
 	f.write(user_account)
 	f.close
